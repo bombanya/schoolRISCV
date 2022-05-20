@@ -62,11 +62,11 @@ module sm_top
         .rise(uart_on_rise)
     );
 
-    wire protect = rom_wr & uart_on_cln;
+    wire wr_protect = rom_wr & uart_on_cln;
 
     sm_rom reset_rom(
         .clk(clkIn),
-        .wr(protect),
+        .wr(wr_protect),
         .rst(uart_on_rise),
         .data_in(rom_data_in),
         .a(rom_addr),
@@ -75,7 +75,7 @@ module sm_top
         .dbg_rd(rom_dbg_data)
     );
 
-    mmu sm_mmu(
+    mmu mmu(
         .enable(uart_on_cln),
         .uart_in(uart),
         .clk(clkIn),
@@ -125,7 +125,7 @@ endmodule
 //tunable clock devider
 module sm_clk_divider
 #(
-    parameter shift  = 0
+    parameter shift  = 12
 )
 (
     input           clkIn,
