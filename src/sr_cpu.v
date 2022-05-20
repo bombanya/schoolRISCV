@@ -60,10 +60,8 @@ module sr_cpu
     wire [31:0] pcBranch = pc + immB;
     wire [31:0] pcPlus4  = pc + 4;
     wire [31:0] pcNext   = pcSrc ? pcBranch : pcPlus4;
-    wire math_busy_saved;
-    sm_debouncer #(.SIZE(1)) math_db(clk, math_busy, math_busy_saved, !rst_n);
 
-    sm_register_we r_pc(clk, rst_n, !math_busy & !math_busy_saved, pcNext, pc);
+    sm_register_we r_pc(clk, rst_n, !math_busy, pcNext, pc);
 
     //program memory access
     assign imAddr = pc >> 2;

@@ -29,10 +29,10 @@ module sm_top
     wire    [ 4:0 ] addr;
     wire uart_on_cln;
 
-    sm_debouncer #(.SIZE(4)) f0(clkIn, clkDevide, devide, 1'b0);
-    sm_debouncer #(.SIZE(1)) f1(clkIn, clkEnable, enable, 1'b0);
-    sm_debouncer #(.SIZE(5)) f2(clkIn, regAddr,   addr, 1'b0);
-    sm_debouncer #(.SIZE(1)) f3(clkIn, uart_on,   uart_on_cln, 1'b0);
+    sm_debouncer #(.SIZE(4)) f0(clkIn, clkDevide, devide);
+    sm_debouncer #(.SIZE(1)) f1(clkIn, clkEnable, enable);
+    sm_debouncer #(.SIZE(5)) f2(clkIn, regAddr,   addr);
+    sm_debouncer #(.SIZE(1)) f3(clkIn, uart_on,   uart_on_cln);
 
     //cores
     //clock devider
@@ -84,12 +84,9 @@ module sm_top
         .wr(rom_wr)
     );
 
-    wire cpu_rst_n;
-    wire cpu_rst = cpu_rst_n & !uart_on_cln;
+    wire cpu_rst = rst_n & !uart_on_cln;
     wire [31:0] cpu_reg_dbg;
     assign regData = dbgSource ? rom_dbg_data : cpu_reg_dbg;
-
-    sm_debouncer #(.SIZE(1)) f4(clkIn, rst_n, cpu_rst_n , 1'b0);
 
     sr_cpu sm_cpu
     (
@@ -112,16 +109,12 @@ module sm_debouncer
 (
     input                      clk,
     input      [ SIZE - 1 : 0] d,
-    output reg [ SIZE - 1 : 0] q,
-    input  rst
+    output reg [ SIZE - 1 : 0] q
 );
     reg        [ SIZE - 1 : 0] data;
 
-    always @ (posedge clk, posedge rst) begin
-        if (rst) begin
-            data <= 0;
-            q <= 0;
-        end else begin
+    always @ (posedge clk) begin
+        begin
             data <= d;
             q    <= data;
         end
@@ -132,7 +125,7 @@ endmodule
 //tunable clock devider
 module sm_clk_divider
 #(
-    parameter shift  = 12
+    parameter shift  = 0
 )
 (
     input           clkIn,

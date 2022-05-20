@@ -25,7 +25,7 @@ module sqrt(
     assign busy_out = state;
     assign m = 1 << (ctr - 2);
     
-    always @(posedge clk_in) begin
+    always @(posedge clk_in, posedge rst_in) begin
         if (rst_in) begin
             ctr <= 8;
             y <= 0;

@@ -40,8 +40,8 @@ module sm_rom
     end
    
 
-    /*initial begin
+    initial begin
         $readmemh ("program.mem", rom);
-    end*/
+    end
 
 endmodule

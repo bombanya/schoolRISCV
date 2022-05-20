@@ -14,7 +14,7 @@ module edge_detector
     reg old_sig;
     assign rise = sig & !old_sig;
     
-    always @(posedge clk_in) begin
+    always @(posedge clk_in, posedge rst_in) begin
         if (rst_in) begin
             old_sig <= INIT;
         end else begin

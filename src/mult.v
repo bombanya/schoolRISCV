@@ -29,7 +29,7 @@ module mult(
     assign end_step = (ctr == 4'h8);
     assign busy_out = state != IDLE;
     
-    always @(posedge clk_in)
+    always @(posedge clk_in, posedge rst_in)
         if (rst_in) begin
             ctr <= 0;
             part_res <= 0;
