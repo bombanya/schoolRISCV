@@ -79,7 +79,7 @@ module sm_testbench;
         uart = 1;
         repeat (4)  @(posedge clk);
         rst_n   = 1;
-        repeat (2)  @(posedge clk);
+        /*repeat (2)  @(posedge clk);
         uart_on = 1;
         for (i = 0; i < 2; i = i + 1) begin
             for (j = 0; j < 4; j = j + 1) begin
@@ -97,7 +97,7 @@ module sm_testbench;
         #104200;
         uart_on = 0;
         #20;
-        $stop;
+        $stop;*/
         
     end
 

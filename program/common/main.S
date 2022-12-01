@@ -5,7 +5,5 @@
 
             .text
 
-start:      li a0, 129
-            li a1, 255
-            or a2, a0, a1 
-            or a2, a1, a0
+start:      li t0, 0xdeadc0de
+            lui t0, 0

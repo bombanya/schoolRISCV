@@ -75,7 +75,7 @@ module sm_top
         .dbg_rd(rom_dbg_data)
     );
 
-    mmu mmu(
+    uart_receiver uart_receiver(
         .enable(uart_on_cln),
         .uart_in(uart),
         .clk(clkIn),

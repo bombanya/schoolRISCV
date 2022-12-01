@@ -36,7 +36,7 @@ CC = $(CROSS_COMPILE)gcc
 OD = $(CROSS_COMPILE)objdump
 OC = $(CROSS_COMPILE)objcopy
 
-build: program.dis program.hex
+build: program.dis program.hex uart_payload.mem
 
 #compile program
 #  Makefile automatic variables:
@@ -85,3 +85,5 @@ program.hex: program.mem
 	../common/hex32.py $< $@
 	sed -i '1d' $@
 
+uart_payload.mem: program.hex
+	./RISCtoBinary
